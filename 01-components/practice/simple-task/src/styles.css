@@ -1,0 +1,390 @@
+/**
+ * styles.css - Estilos Globales de la Aplicación
+ * 
+ * Descripción:
+ * Archivo de estilos globales que define la apariencia visual de toda la aplicación.
+ * Este archivo se aplica a todos los componentes y se carga en angular.json.
+ * 
+ * Estructura:
+ * 1. Configuración básica y layout principal
+ * 2. Estilos del formulario de tareas
+ * 3. Estilos de los componentes de tarea (TaskItem)
+ * 4. Estilos de estados especiales (lista vacía, urgente)
+ * 
+ * Paleta de colores:
+ * - Primario: #007bff (azul)
+ * - Éxito: #28a745 (verde)
+ * - Peligro: #dc3545 (rojo)
+ * - Info: #17a2b8 (cyan)
+ * - Gris: #6c757d
+ * - Fondo: #f4f7f6
+ * 
+ * @author Ing. Andres Hernandez Dev-Senior-Code
+ */
+
+/* ========================================================================== */
+/* 1. CONFIGURACIÓN BÁSICA Y LAYOUT PRINCIPAL */
+/* ========================================================================== */
+
+/**
+ * Estilos del body
+ * 
+ * - font-family: Pila de fuentes modernas y legibles
+ * - background-color: Fondo gris claro para contraste con el contenedor
+ * - margin: 0 para eliminar márgenes por defecto del navegador
+ * - padding: 20px para espaciado general en toda la página
+ */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7f6;
+    margin: 0;
+    padding: 20px;
+}
+
+/**
+ * Contenedor principal de la aplicación
+ * 
+ * - max-width: 900px - Limita el ancho para mejor legibilidad
+ * - margin: 0 auto - Centra el contenedor horizontalmente
+ * - background: #ffffff - Fondo blanco para contraste con el body
+ * - padding: 30px - Espaciado interno generoso
+ * - border-radius: 8px - Bordes redondeados para diseño moderno
+ * - box-shadow: Sombra sutil para efecto de elevación (Material Design)
+ */
+.main-app {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+/**
+ * Título principal (h1)
+ * 
+ * - text-align: center - Centrado para énfasis
+ * - color: #333 - Gris oscuro para buena legibilidad
+ * - border-bottom: Línea inferior azul como acento visual
+ * - padding-bottom y margin-bottom: Espaciado para separación
+ */
+h1 {
+    text-align: center;
+    color: #333;
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+    margin-bottom: 25px;
+}
+
+/**
+ * Subtítulos (h2)
+ * 
+ * - color: #007bff - Color primario de la aplicación
+ * - margin-top: Espaciado superior para separación de secciones
+ * - font-weight: 600 - Semi-negrita para jerarquía visual
+ */
+h2 {
+    color: #007bff;
+    margin-top: 25px;
+    font-weight: 600;
+}
+
+/**
+ * Separador horizontal
+ * 
+ * - border: 0 - Elimina borde por defecto
+ * - height: 1px - Línea delgada
+ * - background: #ccc - Color gris claro
+ * - margin: Espaciado vertical para separación de secciones
+ */
+hr {
+    border: 0;
+    height: 1px;
+    background: #ccc;
+    margin: 20px 0;
+}
+
+/* ========================================================================== */
+/* 2. ESTILOS DEL FORMULARIO (TaskManager - Añadir Tarea) */
+/* ========================================================================== */
+
+/**
+ * Contenedor del formulario
+ * 
+ * Usado en: TaskManager component (task-manager.html)
+ * 
+ * - display: flex - Layout flexible para alinear input y botón horizontalmente
+ * - gap: 10px - Espaciado entre elementos del formulario
+ * - margin-bottom: 20px - Separación con el contenido siguiente
+ * - align-items: center - Alineación vertical centrada
+ * 
+ * Este formulario usa (ngSubmit) para ejecutar addTask() al enviar
+ */
+form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+/**
+ * Input de texto para nueva tarea
+ * 
+ * Usado en: TaskManager component con [(ngModel)]="newTaskName"
+ * 
+ * - flex-grow: 1 - Ocupa todo el espacio disponible
+ * - padding: 12px - Espaciado interno para comodidad
+ * - border: 1px solid #ccc - Borde gris claro
+ * - border-radius: 4px - Bordes ligeramente redondeados
+ * - font-size: 16px - Tamaño legible (evita zoom en móviles iOS)
+ * - transition: Animación suave al cambiar el color del borde
+ */
+input[type="text"] {
+    flex-grow: 1;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+/**
+ * Estado focus del input
+ * 
+ * - border-color: #007bff - Borde azul al enfocar (feedback visual)
+ * - outline: none - Elimina el outline por defecto del navegador
+ * 
+ * Mejora la experiencia de usuario indicando el campo activo
+ */
+input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/**
+ * Estilos base para todos los botones
+ * 
+ * - padding: 12px 18px - Espaciado interno (vertical horizontal)
+ * - border: none - Sin borde para diseño limpio
+ * - border-radius: 4px - Bordes redondeados
+ * - cursor: pointer - Indica que es clickeable
+ * - font-weight: bold - Texto en negrita para énfasis
+ * - transition: Animaciones suaves para hover y estados
+ */
+button {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s, opacity 0.3s;
+}
+
+/**
+ * Botón de envío del formulario
+ * 
+ * Usado en: TaskManager component
+ * 
+ * - background-color: #28a745 - Verde para acción positiva (añadir)
+ * - color: white - Texto blanco para contraste
+ * 
+ * Se deshabilita con [disabled] cuando el input está vacío
+ */
+button[type="submit"] {
+    background-color: #28a745;
+    color: white;
+}
+
+/**
+ * Estado hover del botón de envío
+ * 
+ * - background-color: #218838 - Verde más oscuro al pasar el mouse
+ * 
+ * Proporciona feedback visual de interactividad
+ */
+button[type="submit"]:hover {
+    background-color: #218838;
+}
+
+/**
+ * Estado deshabilitado del botón de envío
+ * 
+ * Aplicado cuando: [disabled]="taskInput.invalid || !taskInput.value.trim()"
+ * 
+ * - background-color: #6c757d - Gris para indicar inactividad
+ * - cursor: not-allowed - Cursor que indica que no se puede clickear
+ * - opacity: 0.6 - Transparencia para reforzar el estado deshabilitado
+ */
+button[type="submit"]:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+
+/* ========================================================================== */
+/* 3. ESTILOS DE LOS ÍTEMS DE TAREA (TaskItem Component) */
+/* ========================================================================== */
+
+/**
+ * Contenedor principal de cada tarea individual
+ * 
+ * Usado en: TaskItem component (task-item.html)
+ * Aplicado con: [ngClass]="{'urgent': isUrgent}"
+ * 
+ * - display: flex - Layout flexible para organizar contenido y botones
+ * - justify-content: space-between - Separa el texto de los botones
+ * - align-items: center - Alineación vertical centrada
+ * - padding: 15px - Espaciado interno generoso
+ * - margin-bottom: 10px - Separación entre tareas
+ * - background-color: #f8f9fa - Fondo gris muy claro
+ * - border-radius: 6px - Bordes redondeados
+ * - border-left: 5px solid #007bff - Barra lateral azul (indicador visual)
+ * - box-shadow: Sombra sutil para efecto de tarjeta
+ * 
+ * La clase .urgent se aplica dinámicamente cuando isUrgent = true
+ */
+.task-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 10px;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    border-left: 5px solid #007bff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+/**
+ * Texto del nombre de la tarea
+ * 
+ * Muestra: {{ index + 1 }}. {{ taskName }}
+ * 
+ * - flex-grow: 1 - Ocupa el espacio disponible
+ * - font-size: 1.1em - Ligeramente más grande que el texto normal
+ * - color: #333 - Gris oscuro para buena legibilidad
+ */
+.task-box .task-name {
+    flex-grow: 1;
+    font-size: 1.1em;
+    color: #333;
+}
+
+/**
+ * Contenedor de botones de acción
+ * 
+ * Contiene: Botón "¡Urgente!" y botón "Completar"
+ * 
+ * - display: flex - Layout flexible para los botones
+ * - gap: 8px - Espaciado entre botones
+ */
+.task-box .actions {
+    display: flex;
+    gap: 8px;
+}
+
+/**
+ * Botón "Completar" (verde/cyan)
+ * 
+ * Usado en: TaskItem component
+ * Acción: (click)="markCompleted()" - Emite evento al padre
+ * 
+ * - background-color: #17a2b8 - Color cyan/turquesa
+ * - color: white - Texto blanco para contraste
+ */
+.task-box .btn-green {
+    background-color: #17a2b8;
+    color: white;
+}
+
+/**
+ * Estado hover del botón "Completar"
+ * 
+ * - background-color: #138496 - Cyan más oscuro al pasar el mouse
+ */
+.task-box .btn-green:hover {
+    background-color: #138496;
+}
+
+/**
+ * Botón "Es normal" (cuando la tarea está marcada como urgente)
+ * 
+ * Usado en: TaskItem component cuando isUrgent = true
+ * Acción: (click)="isUrgent = !isUrgent"
+ * 
+ * - background-color: rgb(130, 110, 110) - Marrón grisáceo
+ * - color: white - Texto blanco
+ */
+.task-box .btn-red {
+    background-color: rgb(130, 110, 110);
+    color: white;
+}
+
+/**
+ * Botón "¡Urgente!" (cuando la tarea está en estado normal)
+ * 
+ * Usado en: TaskItem component cuando isUrgent = false
+ * Acción: (click)="isUrgent = !isUrgent"
+ * 
+ * - background-color: #ff0000 - Rojo brillante para llamar la atención
+ * - color: white - Texto blanco para contraste
+ */
+.task-box .btn-gray {
+    background-color: #ff0000;
+    color: white;
+}
+
+/**
+ * Estado urgente de la tarea
+ * 
+ * Aplicado con: [ngClass]="{'urgent': isUrgent}"
+ * Se activa cuando: isUrgent = true
+ * 
+ * - border-left-color: #dc3545 - Barra lateral roja (indicador de urgencia)
+ * - background-color: #fff3cd - Fondo amarillo claro (alerta visual)
+ * 
+ * Este cambio visual ayuda a identificar rápidamente las tareas urgentes
+ */
+.task-box.urgent {
+    border-left-color: #dc3545;
+    background-color: #fff3cd;
+}
+
+/**
+ * Texto de tarea urgente
+ * 
+ * Cuando la tarea está marcada como urgente:
+ * - font-weight: bold - Texto en negrita para mayor énfasis
+ */
+.task-box.urgent .task-name {
+    font-weight: bold;
+}
+
+/**
+ * Mensaje de lista vacía
+ * 
+ * Usado en: TaskManager component (task-manager.html)
+ * Mostrado con: *ngIf="tasks.length === 0"
+ * 
+ * - padding: 30px - Espaciado interno generoso
+ * - text-align: center - Texto centrado
+ * - color: #6c757d - Gris medio para texto secundario
+ * - border: 2px dashed #ccc - Borde punteado gris (estilo placeholder)
+ * - border-radius: 6px - Bordes redondeados
+ * - margin-top: 20px - Separación superior
+ * - font-style: italic - Texto en cursiva para indicar estado vacío
+ * 
+ * Este elemento solo aparece cuando no hay tareas en el array.
+ * Proporciona feedback visual al usuario sobre el estado de la lista.
+ */
+.no-tasks {
+    padding: 30px;
+    text-align: center;
+    color: #6c757d;
+    border: 2px dashed #ccc;
+    border-radius: 6px;
+    margin-top: 20px;
+    font-style: italic;
+}
+

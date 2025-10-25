@@ -1,0 +1,92 @@
+<!-- 
+  Template del componente TaskManager
+  
+  Descripción:
+  - Componente padre que gestiona la lista completa de tareas
+  - Contiene un formulario para agregar nuevas tareas
+  - Renderiza múltiples componentes TaskItem (uno por cada tarea)
+  - Muestra el contador de tareas pendientes
+  
+  Características Angular utilizadas:
+  - Two-way binding: [(ngModel)] para sincronización bidireccional
+  - Event binding: (ngSubmit) para manejar el envío del formulario
+  - Property binding: [disabled] para deshabilitar el botón
+  - Interpolación: {{ }} para mostrar datos dinámicos
+  - Directivas estructurales: *ngIf y *ngFor
+  - Template reference variable: #taskInput
+-->
+
+<div class="task-manager-container">
+  <h2>Añadir Tarea</h2>
+  
+  <!-- 
+    Formulario para agregar tareas:
+    - (ngSubmit): Event binding que ejecuta addTask() al enviar el form
+    - Previene el comportamiento por defecto del formulario HTML
+  -->
+  <form (ngSubmit)="addTask()">
+    <!-- 
+      Input de texto con two-way binding:
+      - [(ngModel)]: Sincronización bidireccional con la propiedad newTaskName
+      - name="TaskInput": Requerido por ngModel en formularios
+      - #taskInput="ngModel": Template reference variable para acceder al estado del input
+      - placeholder: Texto de ayuda para el usuario
+    -->
+    <input type="text"
+    placeholder="Escribe la nueva tarea..."
+    [(ngModel)]="newTaskName" name="TaskInput" #taskInput="ngModel">
+    
+    <!-- 
+      Botón de envío con validación:
+      - type="submit": Activa el evento ngSubmit del formulario
+      - [disabled]: Property binding que deshabilita el botón si:
+        * taskInput.invalid: El input no es válido
+        * !taskInput.value.trim(): El valor está vacío o solo tiene espacios
+    -->
+    <button type="submit" [disabled]="taskInput.invalid || !taskInput.value.trim()">
+      Añadir
+    </button>
+  </form>
+
+  <hr>
+
+  <!-- 
+    Título con contador dinámico:
+    - {{ tasks.length }}: Interpolación que muestra el número de tareas pendientes
+    - Se actualiza automáticamente cuando el array cambia
+  -->
+  <h2>Lista de Tareas ({{ tasks.length }} Pendientes)</h2>
+
+  <!-- 
+    Mensaje cuando no hay tareas:
+    - *ngIf: Directiva estructural que muestra/oculta el elemento
+    - Solo se muestra cuando tasks.length === 0
+  -->
+  <div *ngIf="tasks.length === 0" class="no-task">
+    ¡Lista vacía! Añade tu primera tarea
+  </div>
+
+  <!-- 
+    Iteración sobre el array de tareas:
+    - *ngFor: Directiva estructural que repite el elemento por cada item
+    - let task of tasks: Crea una variable 'task' con cada elemento del array
+    - let i = index: Crea una variable 'i' con el índice actual (0, 1, 2...)
+  -->
+  <div *ngFor="let task of tasks; let i = index">
+    <!-- 
+      Componente hijo TaskItem:
+      - [taskName]="task": Property binding (padre → hijo) que pasa el nombre de la tarea
+      - [index]="i": Property binding que pasa el índice de la tarea
+      - (taskCompleted)="removeTask($event)": Event binding (hijo → padre)
+        * Escucha el evento taskCompleted emitido por el hijo
+        * $event contiene el índice de la tarea a eliminar
+        * Ejecuta el método removeTask() del padre
+    -->
+    <app-task-item
+      [taskName]="task"
+      [index]="i"
+      (taskCompleted)="removeTask($event)"
+    ></app-task-item>
+  </div>
+
+</div>
